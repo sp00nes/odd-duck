@@ -1,0 +1,18 @@
+h1 {
+  font-size: 30px;
+}
+
+#testQuarryContainer {
+  width: 100rem;
+  display: flex;
+  flex-direction: row; 
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+#testQuarryContainer img{
+  border: 3px solid rgb(0, 0, 0);
+  width: 20rem;
+  height: 20rem;
+}
