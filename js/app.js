@@ -3,6 +3,7 @@
 let results = document.getElementById('results');
 let testQuarryContainer = document.getElementById('testQuarryContainer');
 let getResults = document.getElementById('getResults');
+let checkPreviouslyShown = []
 
 let maxVotes = 25;
 let userVotes = 0;
@@ -17,13 +18,15 @@ function elementMaker(newEl, content, parent, attribute1, attributeName1, attrib
   parent.appendChild(title);
 }
 
+
+// || allProducts[productRand] === checkPreviouslyShown[1] || allProducts[productRand] === checkPreviouslyShown[2]
+
 function randomProduct() {
   let productRand = Math.floor(Math.random() * allProducts.length);
-  while (allProducts[productRand].checkCurrentlyShown === 1) {
+  while (allProducts[productRand].checkCurrentlyShown === 1 || allProducts[productRand] === checkPreviouslyShown[0] || allProducts[productRand] === checkPreviouslyShown[1] || allProducts[productRand] === checkPreviouslyShown[2]) {
     productRand = Math.floor(Math.random() * allProducts.length);
   }
   allProducts[productRand].checkCurrentlyShown = 1;
-  // console.log(allProducts[productRand].checkCurrentlyShown);
   return productRand;
 }
 
@@ -65,6 +68,7 @@ function renderQuarry() {
   for (let i = 0; i < imgShow; i++) {
     let renderItem = randomProduct()
     tempArray[i] = allProducts[renderItem]
+    checkPreviouslyShown[i] = allProducts[renderItem];
     elementMaker('img', '', testQuarryContainer, 'src', allProducts[renderItem].src, 'alt', allProducts[renderItem].name)
     allProducts[renderItem].timesShown++;
   }
@@ -73,10 +77,41 @@ function renderQuarry() {
   }
 }
 
+function renderDataGraph() {
+  const labels = [bag.name, banana.name, bathroom.name, boots.name, breakfast.name, bubblegum.name, chair.name, cthulhu.name, dogDuck.name, dragon.name, pen.name, petSweep.name, scissors.name, shark.name, sweep.name, tauntaun.name, unicorn.name, water.name, wine.name];
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Clicks',
+      backgroundColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgb(255, 99, 132)',
+      data: [bag.timesSelected, banana.timesSelected, bathroom.timesSelected, boots.timesSelected, breakfast.timesSelected, bubblegum.timesSelected, chair.timesSelected, cthulhu.timesSelected, dogDuck.timesSelected, dragon.timesSelected, pen.timesSelected, petSweep.timesSelected, scissors.timesSelected, shark.timesSelected, sweep.timesSelected, tauntaun.timesSelected, unicorn.timesSelected, water.timesSelected, wine.timesSelected],
+    }, {
+      label: 'Views',
+      backgroundColor: 'rgb(0, 255, 0)',
+      borderColor: 'rgb(255, 99, 132)',
+      data: [bag.timesShown, banana.timesShown, bathroom.timesShown, boots.timesShown, breakfast.timesShown, bubblegum.timesShown, chair.timesShown, cthulhu.timesShown, dogDuck.timesShown, dragon.timesShown, pen.timesShown, petSweep.timesShown, scissors.timesShown, shark.timesShown, sweep.timesShown, tauntaun.timesShown, unicorn.timesShown, water.timesShown, wine.timesShown],
+    }]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {}
+  };
+
+  const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+  );
+}
+
 function renderResults() {
   for (let i = 0; i < allProducts.length; i++) {
     elementMaker('li', `${allProducts[i].name} had ${allProducts[i].timesShown} views and was selected ${allProducts[i].timesSelected} times`, results,)
   }
+  renderDataGraph();
 }
 
 function handleClick(event) {
