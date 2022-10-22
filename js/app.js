@@ -165,13 +165,8 @@ function handleClick(event) {
   }
 }
 
-testQuarryContainer.addEventListener('click', handleClick);
 
-getProductInfo();
-renderQuarry();
-// localStorage.clear();
-
-
+// Local storage
 function storeProductInfo() {
   let packedProducts = JSON.stringify(allProducts);
   localStorage.setItem('products', packedProducts);
@@ -194,3 +189,10 @@ function getProductInfo() {
   }
 
 }
+
+
+testQuarryContainer.addEventListener('click', handleClick);
+
+getProductInfo();
+renderQuarry();
+// localStorage.clear();
